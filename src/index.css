@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 42 60% 94%;
+    --foreground: 30 30% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 30 30% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 30% 8%;
+
+    --primary: 24 38% 17%;
+    --primary-foreground: 42 60% 94%;
+
+    --secondary: 42 30% 86%;
+    --secondary-foreground: 24 38% 17%;
+
+    --muted: 38 25% 88%;
+    --muted-foreground: 30 10% 45%;
+
+    --accent: 20 78% 49%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 4 63% 46%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 38 25% 85%;
+    --input: 38 25% 85%;
+    --ring: 42 87% 47%;
+
+    --radius: 0.5rem;
+
+    --earth: 24 38% 17%;
+    --clay: 21 55% 30%;
+    --amber: 42 87% 41%;
+    --gold: 42 75% 56%;
+    --sage: 140 26% 39%;
+    --sky: 200 52% 37%;
+    --cream: 42 60% 94%;
+    --paper: 40 40% 90%;
+  }
+
+  .dark {
+    --background: 28 26% 7%;
+    --foreground: 42 45% 92%;
+    --card: 28 24% 10%;
+    --card-foreground: 42 45% 92%;
+    --popover: 28 24% 10%;
+    --popover-foreground: 42 45% 92%;
+    --primary: 42 75% 56%;
+    --primary-foreground: 24 38% 12%;
+    --secondary: 30 22% 16%;
+    --secondary-foreground: 42 45% 92%;
+    --muted: 30 18% 16%;
+    --muted-foreground: 38 16% 68%;
+    --accent: 25 78% 52%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 4 63% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 34 18% 21%;
+    --input: 34 18% 21%;
+    --ring: 42 75% 56%;
+    --earth: 42 45% 92%;
+    --clay: 31 48% 62%;
+    --amber: 42 84% 58%;
+    --gold: 42 78% 63%;
+    --sage: 140 30% 52%;
+    --sky: 200 52% 62%;
+    --cream: 42 60% 94%;
+    --paper: 30 18% 13%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'DM Sans', sans-serif;
+    background:
+      radial-gradient(circle at top left, hsl(var(--gold) / 0.18), transparent 34rem),
+      radial-gradient(circle at 85% 12%, hsl(var(--sky) / 0.12), transparent 30rem),
+      linear-gradient(180deg, hsl(var(--background)), hsl(var(--paper)));
+    background-attachment: fixed;
+    transition: background 300ms ease, color 300ms ease;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Fraunces', serif;
+  }
+
+  input,
+  textarea,
+  select {
+    color: hsl(var(--foreground));
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: hsl(var(--muted-foreground));
+    opacity: 0.85;
+  }
+
+  select option,
+  select optgroup {
+    background-color: hsl(var(--popover));
+    color: hsl(var(--popover-foreground));
+  }
+
+  select option:checked {
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+  }
+}
+
+@layer components {
+  .vs-card {
+    @apply bg-card rounded-2xl border border-border shadow-sm shadow-earth/5 transition-all duration-300;
+  }
+  .vs-card:hover {
+    @apply -translate-y-1 shadow-xl shadow-earth/10;
+  }
+  .app-select {
+    @apply border-border bg-card text-foreground shadow-sm transition-colors;
+    color-scheme: light;
+  }
+  .dark .app-select {
+    color-scheme: dark;
+  }
+  .app-select:focus {
+    @apply outline-none ring-2 ring-amber/30;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(18px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  @keyframes ambient-drift {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(10px, -12px, 0) scale(1.03); }
+  }
+  .animate-fade-up {
+    animation: fadeUp 0.32s ease both;
+  }
+  .animate-slide-in {
+    animation: slideIn 0.28s ease both;
+  }
+  .typing-dot {
+    @apply inline-block w-2 h-2 rounded-full;
+    background: hsl(var(--accent));
+    animation: pulse-dot 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  .ambient-drift {
+    animation: ambient-drift 9s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
